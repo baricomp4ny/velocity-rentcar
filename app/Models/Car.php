@@ -80,6 +80,7 @@ class Car extends Model
     {
         return [
             'text' => strtolower("{$this->name} {$this->brand->name} {$this->category->name}"),
+            'brand' => $this->brand_id,
             'category' => $this->category_id,
             'transmission' => $this->transmission,
             'fuel' => $this->fuel,

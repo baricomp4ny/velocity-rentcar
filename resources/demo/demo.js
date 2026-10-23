@@ -144,7 +144,7 @@ function applyFilters(params) {
 
     document.querySelectorAll('[data-poster]').forEach((el) => el.style.setProperty('display', searching ? 'none' : ''));
 
-    const title = [...document.querySelectorAll('h2')].find((h) => /Mobil Populer|Hasil Pencarian|^\s*(Toyota|Honda|Hyundai|Suzuki|BMW)/.test(h.textContent));
+    const title = [...document.querySelectorAll('h2')].find((h) => /Mobil Populer|Hasil Pencarian/.test(h.textContent));
     if (title) if (title.dataset.original === undefined) title.dataset.original = title.firstChild.textContent;
     title.firstChild.textContent = searching ? `Hasil Pencarian (${shown}) ` : title.dataset.original;
 

@@ -12,6 +12,7 @@ use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,7 +26,7 @@ class DatabaseSeeder extends Seeder
         $locations = collect(['Bogor Barat', 'Bogor Timur', 'Bogor Utara', 'Bogor Selatan', 'Bogor Tengah', 'Tanah Sareal', 'Kabupaten Bogor'])
             ->mapWithKeys(fn ($name, $i) => [$name => Location::create(['name' => $name, 'sort_order' => $i])]);
 
-        $categories = collect(['Hatchback', 'MPV', 'SUV', 'Sedan', 'Crossover', 'Coupe'])
+        $categories = collect(['Hatchback', 'MPV', 'SUV', 'Sedan', 'Crossover', 'Coupe', 'Convertible'])
             ->mapWithKeys(fn ($name, $i) => [$name => Category::create(['name' => $name, 'sort_order' => $i])]);
 
         $payments = collect([
@@ -49,8 +50,11 @@ class DatabaseSeeder extends Seeder
             'name' => $c[0], 'email' => $c[1], 'phone' => $c[2], 'address' => $c[3], 'location_id' => $locations[$c[4]]->id, 'password' => 'password',
         ]));
 
-        $brands = collect(['Toyota', 'Honda', 'Hyundai', 'Suzuki', 'BMW'])->mapWithKeys(fn ($name, $i) => [
-            $name => Brand::create(['name' => $name, 'logo' => 'images/brands/'.strtolower($name).'.svg', 'sort_order' => $i]),
+        $brands = collect([
+            'Toyota', 'Honda', 'Hyundai', 'Suzuki', 'Mitsubishi', 'Nissan', 'Mazda',
+            'BMW', 'Mercedes-Benz', 'Audi', 'Lexus', 'Volkswagen', 'Tesla',
+        ])->mapWithKeys(fn ($name, $i) => [
+            $name => Brand::create(['name' => $name, 'logo' => 'images/brands/'.Str::slug($name).'.svg', 'sort_order' => $i]),
         ]);
 
         $cars = collect($this->cars())->mapWithKeys(function (array $data) use ($brands, $categories) {
@@ -71,6 +75,19 @@ class DatabaseSeeder extends Seeder
         // Riwayat sewa yang sudah selesai + ulasan, sumber rating tiap mobil.
         $reviews = [
             ['BMW M4 Competition', [5, 5, 5], 'Tenaganya luar biasa dan kabinnya sporty, cocok untuk acara spesial.'],
+            ['Mercedes-AMG GT 63', [5, 5, 5], 'Suara mesinnya bikin merinding, pengalaman sewa paling berkesan.'],
+            ['Nissan GT-R', [5, 5, 4], 'Legenda jalanan, akselerasinya brutal.'],
+            ['Tesla Model Y', [5, 5, 4], 'Senyap, lapang, dan fitur autopilotnya membantu di tol.'],
+            ['Tesla Model 3', [5, 4, 5], 'Irit biaya, kabin minimalis dan modern.'],
+            ['Mercedes-Benz C 300', [5, 4, 5], 'Elegan untuk acara kantor dan pernikahan.'],
+            ['Lexus RX 500h', [5, 5, 4], 'Mewah dan sangat nyaman, cocok untuk tamu penting.'],
+            ['Mitsubishi Pajero Sport Dakar', [5, 4, 5], 'Tangguh dan gagah untuk ke Puncak.'],
+            ['Mitsubishi Xpander Cross', [5, 4, 4], 'Lega untuk keluarga, irit bensin.'],
+            ['Audi A6 Allroad', [5, 4, 5], 'Nyaman di perjalanan jauh, bagasi luas.'],
+            ['Volkswagen Tiguan', [4, 5, 4], 'Kokoh dan stabil di jalan tol.'],
+            ['Nissan X-Trail e-Power', [5, 4, 4], 'Responsif dan irit berkat e-Power.'],
+            ['Mazda CX-5', [5, 4, 5], 'Interiornya premium untuk kelasnya.'],
+            ['Mazda MX-5', [5, 5, 5], 'Seru banget buka atap keliling Bogor sore hari.'],
             ['Toyota Innova Zenix Q 2.0', [5, 5, 5], 'Mobilnya bersih, irit, dan nyaman untuk keluarga.'],
             ['Toyota Land Cruiser Prado', [5, 5, 4], 'Gagah dan sangat nyaman untuk ke Puncak.'],
             ['Hyundai Palisade Signature', [5, 5, 5], 'Kabin luas dan mewah, pelayanan cepat.'],
@@ -207,6 +224,91 @@ class DatabaseSeeder extends Seeder
                 'fuel' => 'Bensin', 'fuel_grade' => 'RON 92', 'seats' => 4, 'year' => 2019, 'price_per_day' => 800000, 'is_popular' => false,
                 'photos' => ['suzuki-jimny.jpg'],
                 'description' => 'Suzuki Jimny adalah SUV kompak 4x4 legendaris yang siap diajak berpetualang ke jalur Puncak dan sekitarnya.',
+            ],
+            [
+                'brand' => 'Mitsubishi', 'name' => 'Mitsubishi Pajero Sport Dakar', 'category' => 'SUV', 'transmission' => 'Matic',
+                'fuel' => 'Diesel', 'fuel_grade' => 'Dexlite', 'seats' => 7, 'year' => 2021, 'power_hp' => 181, 'price_per_day' => 1200000, 'is_popular' => true,
+                'photos' => ['mitsubishi-pajero-sport.jpg'],
+                'description' => 'Mitsubishi Pajero Sport Dakar adalah SUV ladder frame bermesin diesel 2.4 yang tangguh, nyaman untuk keluarga besar, dan siap menanjak ke Puncak.',
+            ],
+            [
+                'brand' => 'Mitsubishi', 'name' => 'Mitsubishi Xpander Cross', 'category' => 'MPV', 'transmission' => 'Matic',
+                'fuel' => 'Bensin', 'fuel_grade' => 'RON 92', 'seats' => 7, 'year' => 2022, 'price_per_day' => 600000, 'is_popular' => false,
+                'photos' => ['mitsubishi-xpander-cross.jpg'],
+                'description' => 'Mitsubishi Xpander Cross memadukan kelapangan MPV tujuh penumpang dengan tampilan crossover dan ground clearance tinggi.',
+            ],
+            [
+                'brand' => 'Nissan', 'name' => 'Nissan GT-R', 'model_code' => 'R35', 'category' => 'Coupe', 'transmission' => 'Matic',
+                'fuel' => 'Bensin', 'fuel_grade' => 'RON 98', 'seats' => 4, 'year' => 2018, 'power_hp' => 565, 'acceleration' => 2.9,
+                'price_per_day' => 7000000, 'is_popular' => true,
+                'photos' => ['nissan-gt-r.jpg'],
+                'description' => 'Nissan GT-R R35 "Godzilla" dengan mesin V6 twin-turbo 3.8 liter dan penggerak empat roda. Akselerasi 0-100 km/jam di bawah 3 detik untuk pengalaman supercar sejati.',
+            ],
+            [
+                'brand' => 'Nissan', 'name' => 'Nissan X-Trail e-Power', 'category' => 'SUV', 'transmission' => 'Matic',
+                'fuel' => 'Hybrid', 'fuel_grade' => 'e-Power', 'seats' => 5, 'year' => 2023, 'power_hp' => 201, 'price_per_day' => 1400000, 'is_popular' => false,
+                'photos' => ['nissan-x-trail.jpg'],
+                'description' => 'Nissan X-Trail generasi T33 dengan teknologi e-Power: roda digerakkan motor listrik sehingga responsif, senyap, dan irit.',
+            ],
+            [
+                'brand' => 'Mazda', 'name' => 'Mazda CX-5', 'category' => 'SUV', 'transmission' => 'Matic',
+                'fuel' => 'Bensin', 'fuel_grade' => 'RON 92', 'seats' => 5, 'year' => 2022, 'power_hp' => 155, 'price_per_day' => 900000, 'is_popular' => false,
+                'photos' => ['mazda-cx-5.jpg'],
+                'description' => 'Mazda CX-5 menawarkan desain Kodo yang elegan, kabin premium, dan handling yang menyenangkan untuk perjalanan sehari-hari.',
+            ],
+            [
+                'brand' => 'Mazda', 'name' => 'Mazda MX-5', 'model_code' => 'ND', 'category' => 'Convertible', 'transmission' => 'Manual',
+                'fuel' => 'Bensin', 'fuel_grade' => 'RON 92', 'seats' => 2, 'year' => 2016, 'power_hp' => 155, 'acceleration' => 7.3,
+                'price_per_day' => 1500000, 'is_popular' => false,
+                'photos' => ['mazda-mx-5.jpg'],
+                'description' => 'Mazda MX-5 adalah roadster dua kursi beratap terbuka yang ringan dan lincah. Pilihan sempurna untuk menikmati udara sejuk Bogor.',
+            ],
+            [
+                'brand' => 'Mercedes-Benz', 'name' => 'Mercedes-AMG GT 63', 'category' => 'Coupe', 'transmission' => 'Matic',
+                'fuel' => 'Bensin', 'fuel_grade' => 'RON 98', 'seats' => 4, 'year' => 2024, 'power_hp' => 577, 'acceleration' => 3.2,
+                'price_per_day' => 6500000, 'is_popular' => true,
+                'photos' => ['mercedes-amg-gt.jpg'],
+                'description' => 'Mercedes-AMG GT 63 dengan mesin V8 biturbo 4.0 liter hasil rakitan tangan AMG. Desain panjang dan rendah dengan suara knalpot yang khas.',
+            ],
+            [
+                'brand' => 'Mercedes-Benz', 'name' => 'Mercedes-Benz C 300', 'category' => 'Sedan', 'transmission' => 'Matic',
+                'fuel' => 'Bensin', 'fuel_grade' => 'RON 98', 'seats' => 5, 'year' => 2024, 'power_hp' => 258, 'acceleration' => 6.0,
+                'price_per_day' => 2500000, 'is_popular' => false,
+                'photos' => ['mercedes-benz-c-300.jpg'],
+                'description' => 'Mercedes-Benz C 300 generasi W206 menghadirkan kemewahan S-Class dalam ukuran ringkas, cocok untuk acara bisnis maupun pernikahan.',
+            ],
+            [
+                'brand' => 'Audi', 'name' => 'Audi A6 Allroad', 'category' => 'Crossover', 'transmission' => 'Matic',
+                'fuel' => 'Bensin', 'fuel_grade' => 'RON 98', 'seats' => 5, 'year' => 2022, 'power_hp' => 245, 'price_per_day' => 2800000, 'is_popular' => false,
+                'photos' => ['audi-a6-allroad.jpg'],
+                'description' => 'Audi A6 Allroad quattro adalah wagon mewah berpenggerak empat roda dengan suspensi udara, nyaman dan lega untuk perjalanan jauh.',
+            ],
+            [
+                'brand' => 'Lexus', 'name' => 'Lexus RX 500h', 'category' => 'SUV', 'transmission' => 'Matic',
+                'fuel' => 'Hybrid', 'fuel_grade' => 'RON 92', 'seats' => 5, 'year' => 2023, 'power_hp' => 366, 'acceleration' => 6.2,
+                'price_per_day' => 3500000, 'is_popular' => false,
+                'photos' => ['lexus-rx-500h.jpg'],
+                'description' => 'Lexus RX 500h F Sport Performance adalah SUV hybrid mewah dengan kabin yang sangat senyap dan pelayanan kelas premium.',
+            ],
+            [
+                'brand' => 'Volkswagen', 'name' => 'Volkswagen Tiguan', 'category' => 'SUV', 'transmission' => 'Matic',
+                'fuel' => 'Bensin', 'fuel_grade' => 'RON 92', 'seats' => 5, 'year' => 2021, 'power_hp' => 150, 'price_per_day' => 1300000, 'is_popular' => false,
+                'photos' => ['volkswagen-tiguan.jpg'],
+                'description' => 'Volkswagen Tiguan adalah SUV Eropa yang kokoh dan stabil, dengan kabin rapi dan fitur keselamatan lengkap.',
+            ],
+            [
+                'brand' => 'Tesla', 'name' => 'Tesla Model Y', 'category' => 'Crossover', 'transmission' => 'Matic',
+                'fuel' => 'Listrik', 'fuel_grade' => 'Baterai 75 kWh', 'seats' => 5, 'year' => 2024, 'power_hp' => 384, 'acceleration' => 5.0,
+                'price_per_day' => 1900000, 'is_popular' => true,
+                'photos' => ['tesla-model-y.jpg'],
+                'description' => 'Tesla Model Y Long Range adalah crossover listrik dengan jarak tempuh panjang, layar besar di tengah kabin, dan bagasi yang sangat lega.',
+            ],
+            [
+                'brand' => 'Tesla', 'name' => 'Tesla Model 3', 'category' => 'Sedan', 'transmission' => 'Matic',
+                'fuel' => 'Listrik', 'fuel_grade' => 'Baterai 60 kWh', 'seats' => 5, 'year' => 2024, 'power_hp' => 283, 'acceleration' => 6.1,
+                'price_per_day' => 1800000, 'is_popular' => false,
+                'photos' => ['tesla-model-3.jpg'],
+                'description' => 'Tesla Model 3 Highland adalah sedan listrik minimalis yang senyap dan hemat biaya, dengan kabin modern dan teknologi terbaru.',
             ],
         ];
     }

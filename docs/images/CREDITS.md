@@ -30,3 +30,24 @@ Foto disimpan dengan lebar 1920px (HD). Logo merek diubah warnanya menjadi gelap
 | `cars/bmw-m4-competition-interior.jpg` | Damian B Oh | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_G82_M4_Competition_Extended_Merino_Leather_Kyalami_Orange_Black_(12).jpg) |
 | `cars/bmw-m4-competition-rear.jpg` | Ethan Llamas | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_M4_Competition_G82_Brooklyn_Grey_Metallic_02.jpg) |
 | `brands/bmw.svg` | BMW | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:BMW.svg) |
+| `cars/mercedes-benz-c-300.jpg` | Charles from Port Chester, New York | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Mercedes-Benz_C_300_4MATIC_(W206,_2026)_(55211085532).jpg) |
+| `cars/mercedes-amg-gt.jpg` | Teves 9 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024_Mercedes-Benz_AMG_GT_front.jpg) |
+| `cars/tesla-model-3.jpg` | Aos.1905 | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_3_(Highland,_facelift)_(front_three-quarter_view)_at_Tesla_Osaka_Ibaraki.jpg) |
+| `cars/tesla-model-y.jpg` | BuickRiviera99 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024_Tesla_Model_Y_Long_Range,_front_left,_08-21-2026.jpg) |
+| `cars/mitsubishi-pajero-sport.jpg` | Andra Febrian | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2021_Mitsubishi_Pajero_Sport_2.4_Dakar_4x2_(Indonesia)_front_view_01.jpg) |
+| `cars/mitsubishi-xpander-cross.jpg` | Andra Febrian | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2022_Mitsubishi_Xpander_Cross_(Indonesia)_front_view.jpg) |
+| `cars/volkswagen-tiguan.jpg` | Rutger van der Maar | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Volkswagen_Tiguan_front.jpg) |
+| `cars/nissan-x-trail.jpg` | LuvsMG481 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2023_Nissan_X-Trail_Ti_front.jpg) |
+| `cars/nissan-gt-r.jpg` | Ethan Llamas | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Nissan_GT-R_R35_2018_(1).jpg) |
+| `cars/lexus-rx-500h.jpg` | Alexander-93 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Lexus_RX_500h_F_Sport_Performance_(TALH17)_1X7A7076.jpg) |
+| `cars/audi-a6-allroad.jpg` | Alexander Migl | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Audi_A6_Allroad_Quattro_C8_1X7A0301.jpg) |
+| `cars/mazda-cx-5.jpg` | ShangTW | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2022_Mazda_CX-5_2.0_front.jpg) |
+| `cars/mazda-mx-5.jpg` | MercurySable99 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2016_Mazda_MX-5_Miata_Grand_Touring,_front_left,_06-13-2026.jpg) |
+| `brands/mercedes-benz.svg` | Mercedes-Benz Group | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Mercedes-Benz_Star_2022.svg) |
+| `brands/tesla.svg` | Tesla (logo), Fry1989 eh? (vectorization) | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Tesla_T_symbol.svg) |
+| `brands/mitsubishi.svg` | Mitsubishi | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Mitsubishi_logo.svg) |
+| `brands/volkswagen.svg` | Volkswagen | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Volkswagen_logo_2019.svg) |
+| `brands/nissan.svg` | Nissan Motor Corporation | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Nissan_2020_logo.svg) |
+| `brands/lexus.svg` | Glebushko0703 | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Lexus_Logo.svg) |
+| `brands/audi.svg` | Strichpunkt / KMS Team | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Audi-Logo_2016.svg) |
+| `brands/mazda.svg` | الشيخ ماهر بن حمد المعيقلي | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Mazda_logo_with_emblem,_new.svg) |

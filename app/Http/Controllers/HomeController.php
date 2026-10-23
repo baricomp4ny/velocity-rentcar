@@ -36,18 +36,23 @@ class HomeController extends Controller
     public function explore(Request $request)
     {
         $brands = Brand::orderBy('sort_order')->get();
-        $brand = $brands->firstWhere('id', $request->query('brand')) ?? $brands->first();
         $filters = $this->filters($request);
+
+        // Semua mobil dirender; pilihan merek (bisa lebih dari satu) disaring langsung di browser.
+        // ?brand=ID (dari logo di Home) atau ?brand[]=ID&brand[]=ID menentukan merek yang terpilih awal.
+        $selected = $brands->pluck('id')->intersect((array) $request->query('brand', []))->values()->all();
 
         $cars = Car::forListing()
             ->available()
-            ->when($brand, fn ($q) => $q->whereBelongsTo($brand))
             ->filter($filters)
+            ->orderBy('brand_id')
             ->orderBy('price_per_day')
-            ->get();
+            ->get()
+            ->sortBy(fn (Car $car) => $car->brand->sort_order)
+            ->values();
 
         return view('user.explore', [
-            ...compact('brands', 'brand', 'cars', 'filters'),
+            ...compact('brands', 'selected', 'cars', 'filters'),
             'favoriteIds' => $request->user()->favorites()->pluck('cars.id')->all(),
         ]);
     }
