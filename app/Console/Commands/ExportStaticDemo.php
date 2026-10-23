@@ -174,6 +174,14 @@ class ExportStaticDemo extends Command
             $html
         );
 
+        // Path root-absolut (mis. aset Vite "/build/...") juga dibuat relatif, karena GitHub Pages
+        // menyajikan situs di subfolder (/velocity-rentcar/), bukan di root domain.
+        $html = preg_replace_callback(
+            '#\b(href|src)="(/(?!/)[^"]*)"#',
+            fn ($m) => $m[1].'="'.e($this->target(html_entity_decode($m[2]))).'"',
+            $html
+        );
+
         // Form tetap menyimpan path aslinya agar demo.js tahu aksi apa yang disimulasikan.
         $html = preg_replace_callback(
             '/\baction="'.preg_quote(self::HOST, '/').'([^"]*)"/',
