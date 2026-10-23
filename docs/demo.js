@@ -142,10 +142,11 @@ function applyFilters(params) {
         shown += match ? 1 : 0;
     });
 
-    document.querySelector('[data-poster]')?.style.setProperty('display', searching ? 'none' : '');
+    document.querySelectorAll('[data-poster]').forEach((el) => el.style.setProperty('display', searching ? 'none' : ''));
 
-    const title = [...document.querySelectorAll('h2')].find((h) => /Populer Cars|Hasil Pencarian/.test(h.textContent));
-    if (title) title.firstChild.textContent = searching ? `Hasil Pencarian (${shown}) ` : 'Populer Cars ';
+    const title = [...document.querySelectorAll('h2')].find((h) => /Mobil Populer|Hasil Pencarian|^\s*(Toyota|Honda|Hyundai|Suzuki|BMW)/.test(h.textContent));
+    if (title) if (title.dataset.original === undefined) title.dataset.original = title.firstChild.textContent;
+    title.firstChild.textContent = searching ? `Hasil Pencarian (${shown}) ` : title.dataset.original;
 
     let empty = document.getElementById('demo-empty');
     if (!empty) {
@@ -171,13 +172,15 @@ function applyFilters(params) {
 
 /* ---------- Simulasi aksi form ---------- */
 
+// Tanggal lokal (WIB), bukan UTC.
+const todayIso = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 const formatDate = (iso) => new Date(`${iso}T00:00:00`).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
 function saveBooking(form, action) {
     const d = window.Alpine.$data(form);
     const carId = action.match(/cars\/([0-9a-f-]{36})/)[1];
     sessionStorage.setItem(STORAGE_BOOKING, JSON.stringify({
-        code: `VRC-${new Date().toISOString().slice(2, 10).replace(/-/g, '')}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`,
+        code: `VRC-${todayIso().slice(2).replace(/-/g, '')}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`,
         model: demo.cars[carId],
         name: d.name,
         pickup: formatDate(d.date),
@@ -233,7 +236,7 @@ function fillReceipt() {
     const values = {
         Kendaraan: booking.model,
         Peminjam: booking.name,
-        'Tanggal Pesan': formatDate(new Date().toISOString().slice(0, 10)),
+        'Tanggal Pesan': formatDate(todayIso()),
         Pengambilan: booking.pickup,
         Pengembalian: booking.returns,
         Lokasi: booking.location,

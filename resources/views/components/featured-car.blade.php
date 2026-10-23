@@ -1,92 +1,27 @@
 @props(['car'])
 
 @php
-    // Tiga panel miring seperti poster referensi: depan, interior, belakang.
-    // Jika fotonya kurang dari 3, foto utama dipotong dari sisi kiri / kanan.
-    $photos = $car->photoUrls();
-    $panels = [
-        [$photos[0], 'left'],
-        [$photos[1] ?? $photos[0], 'center'],
-        [$photos[2] ?? $photos[0], $photos[2] ?? false ? 'center' : 'right'],
-    ];
-    $brand = $car->brand->name;
-    // Mobil dengan kode model (mis. BMW M4 G82) ditulis singkat seperti poster: "M4".
     $model = \Illuminate\Support\Str::words($car->modelName(), $car->model_code ? 1 : 2, '');
+    $highlight = $car->powerLabel() ? \Illuminate\Support\Str::before($car->powerLabel(), ' (') : $car->category->name;
 @endphp
 
-{{-- Poster mobil unggulan (gaya poster otomotif) --}}
-<section class="relative isolate overflow-hidden bg-[#EFEEEA] px-5 pb-7 pt-6 lg:rounded-3xl lg:px-14 lg:pb-12 lg:pt-10 lg:shadow-card">
-    {{-- Coretan grafiti samar di latar --}}
-    <p aria-hidden="true" class="pointer-events-none absolute -left-6 top-24 -z-10 -rotate-12 select-none whitespace-nowrap font-marker text-[96px] leading-none text-ink/[.07] lg:-left-10 lg:top-28 lg:text-[220px]">{{ $brand }} {{ $model }}</p>
-    <p aria-hidden="true" class="pointer-events-none absolute -right-8 top-[46%] -z-10 rotate-6 select-none whitespace-nowrap font-marker text-[72px] leading-none text-ink/[.06] lg:text-[180px]">{{ $car->model_code ?? $car->category->name }}</p>
+{{-- Banner biru mobil unggulan (dipilih admin di Pengaturan Toko) --}}
+<a href="{{ route('cars.show', $car) }}"
+   class="relative block h-48 overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-[#3D9BFF] text-white shadow-lg shadow-primary/25 lg:h-72">
+    {{-- Lingkaran dekoratif --}}
+    <span class="absolute -right-10 -top-16 h-56 w-56 rounded-full bg-white/10 lg:h-96 lg:w-96"></span>
+    <span class="absolute -bottom-20 right-24 h-44 w-44 rounded-full bg-white/10 lg:right-72"></span>
 
-    <div class="grid grid-cols-3 text-center text-[13px] font-extrabold uppercase tracking-wide lg:text-xl">
-        <span class="text-left">{{ $brand }}</span>
-        <span class="truncate px-1">{{ $model }}</span>
-        <span class="text-right">{{ $car->model_code ?? $car->year ?? $car->category->name }}</span>
-    </div>
+    <img src="{{ $car->imageUrl() }}" alt="{{ $car->name }}"
+         class="absolute inset-y-0 right-0 h-full w-[55%] object-cover"
+         style="-webkit-mask-image: linear-gradient(to right, transparent, #000 38%); mask-image: linear-gradient(to right, transparent, #000 38%)">
 
-    {{-- Tiga panel miring --}}
-    <div class="mt-5 grid h-40 grid-cols-3 gap-1.5 lg:mt-8 lg:h-72 lg:gap-3">
-        @foreach ($panels as $i => [$src, $position])
-            <div class="overflow-hidden bg-ink shadow-lg {{ $i === 1 ? '' : 'mt-6 lg:mt-12' }}"
-                 style="clip-path: polygon(14% 0, 100% 0, 86% 100%, 0 100%)">
-                <img src="{{ $src }}" alt="" loading="lazy" class="h-full w-full object-cover" style="object-position: {{ $position }}">
-            </div>
-        @endforeach
-    </div>
-
-    {{-- Foto utama --}}
-    <a href="{{ route('cars.show', $car) }}" class="relative mx-auto -mt-10 block w-[92%] overflow-hidden rounded-2xl shadow-2xl ring-4 ring-[#EFEEEA] lg:-mt-20 lg:w-[68%]">
-        <img src="{{ $photos[0] }}" alt="{{ $car->name }}" class="h-52 w-full object-cover lg:h-[360px]">
-        <span class="absolute left-3 top-3 flex items-center gap-1 rounded-md bg-white/90 px-2 py-0.5 text-xs font-medium">
-            <x-icon name="star" class="h-3.5 w-3.5 text-amber-400"/> {{ $car->ratingLabel() }}
+    <div class="relative z-10 flex h-full max-w-[60%] flex-col justify-center p-5 lg:max-w-[45%] lg:p-10">
+        <p class="text-[11px] font-medium uppercase tracking-wider text-white/75 lg:text-sm">{{ $car->brand->name }} {{ $model }} · {{ $highlight }}</p>
+        <p class="mt-1 text-[17px] font-semibold leading-snug lg:text-4xl">Rasakan Performa,<br>Nikmati Perjalanan</p>
+        <p class="mt-1 text-xs text-white/80 lg:mt-3 lg:text-base">Mulai {{ rupiah($car->price_per_day, false) }}/hari</p>
+        <span class="mt-3 inline-flex w-fit items-center gap-1.5 rounded-full bg-white/20 px-3 py-1.5 text-xs font-medium backdrop-blur lg:mt-6 lg:px-5 lg:py-2.5 lg:text-sm">
+            <x-icon name="car" class="h-4 w-4"/> Sewa Sekarang
         </span>
-    </a>
-
-    {{-- Judul gaya grafiti --}}
-    <h2 class="mt-6 flex items-end justify-center gap-2 lg:mt-8">
-        <span class="font-marker text-6xl leading-none text-ink lg:text-8xl">{{ $brand }}</span>
-        <span class="mb-1 font-marker text-2xl leading-none text-primary lg:mb-3 lg:text-4xl">{{ $model }}</span>
-    </h2>
-
-    <div class="mt-6 grid gap-5 lg:mt-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end lg:gap-12">
-        <div>
-            <p class="text-[10.5px] uppercase leading-relaxed tracking-wide text-ink/80 lg:text-[13px]">
-                {{ \Illuminate\Support\Str::limit($car->description, 300) }}
-            </p>
-            <div class="mt-3 w-24 border-t-2 border-dashed border-ink/70"></div>
-        </div>
-
-        {{-- Kotak spesifikasi bergaris putus-putus seperti poster --}}
-        <div class="rounded-2xl border-2 border-dashed border-ink/60 p-4">
-            <div class="grid grid-cols-2 gap-x-3 gap-y-3 lg:grid-cols-1">
-                @if ($car->powerLabel())
-                    <div>
-                        <p class="text-[11px] text-grey">power</p>
-                        <p class="text-base font-semibold uppercase leading-tight lg:text-lg">{{ $car->powerLabel() }}</p>
-                    </div>
-                @endif
-                @if ($car->accelerationLabel())
-                    <div>
-                        <p class="text-[11px] text-grey">0-100 km/jam</p>
-                        <p class="text-base font-semibold leading-tight lg:text-lg">{{ $car->accelerationLabel() }}</p>
-                    </div>
-                @endif
-                <div>
-                    <p class="text-[11px] text-grey">harga / hari</p>
-                    <p class="text-base font-semibold leading-tight lg:text-lg">{{ rupiah($car->price_per_day, false) }}</p>
-                </div>
-                <div>
-                    <p class="text-[11px] text-grey">spesifikasi</p>
-                    <p class="text-sm font-semibold leading-tight">{{ $car->seats }} kursi · {{ $car->transmission }}</p>
-                    <p class="text-[11px] text-grey">{{ $car->fuelLabel() }}</p>
-                </div>
-            </div>
-            <div class="mt-4 flex gap-2">
-                <a href="{{ route('bookings.create', $car) }}" class="btn-primary flex-1 py-2.5 text-sm">Book Now</a>
-                <a href="{{ route('cars.show', $car) }}" class="inline-flex flex-1 items-center justify-center rounded-xl border border-ink/20 bg-white py-2.5 text-sm font-medium transition hover:bg-neutral">Detail</a>
-            </div>
-        </div>
     </div>
-</section>
+</a>

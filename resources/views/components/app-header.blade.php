@@ -10,59 +10,51 @@
     ];
 @endphp
 
-{{-- Ponsel: header biru (Location, notifikasi, Search, filter) sesuai prototipe.
-     Desktop: bilah pencarian putih yang ringkas di bawah navigasi. --}}
-<header x-data="{ filterOpen: false }" class="relative z-10 rounded-b-3xl bg-primary px-6 pb-6 pt-[max(2rem,env(safe-area-inset-top))] text-white lg:rounded-none lg:border-b lg:border-gray-100 lg:bg-white lg:px-0 lg:py-4 lg:text-ink">
-    <div class="container-page lg:flex lg:items-center lg:gap-8">
-        <div class="flex items-start justify-between">
+{{-- Header bersih: Location + notifikasi, lalu kolom pencarian dengan tombol filter di dalamnya. --}}
+<header x-data="{ filterOpen: false }" class="relative z-10 bg-white px-5 pb-4 pt-[max(1.5rem,env(safe-area-inset-top))] lg:border-b lg:border-gray-100 lg:px-0 lg:py-4">
+    <div class="container-page lg:flex lg:items-center lg:gap-10">
+        <div class="flex items-center justify-between">
             <form method="POST" action="{{ route('location.update') }}">
                 @csrf @method('PUT')
-                <p class="text-xs text-white/80 lg:text-grey">Location</p>
-                <label class="relative mt-0.5 flex cursor-pointer items-center gap-1.5 text-base font-medium">
-                    <x-icon name="pin" class="h-5 w-5 lg:text-primary"/>
+                <p class="text-sm font-medium text-ink">Location</p>
+                <label class="relative mt-0.5 flex cursor-pointer items-center gap-1 text-xs font-medium text-primary">
+                    <x-icon name="map-pin" class="h-3.5 w-3.5"/>
                     <select name="location_id" onchange="this.form.submit()"
-                            class="cursor-pointer appearance-none border-0 bg-transparent p-0 pr-6 text-base font-medium text-white focus:ring-0 lg:text-ink"
+                            class="cursor-pointer appearance-none border-0 bg-transparent p-0 pr-5 text-xs font-medium text-primary focus:ring-0"
                             style="background-image:none">
                         @foreach ($locations as $location)
                             <option value="{{ $location->id }}" class="text-ink" @selected($user->location_id === $location->id)>{{ $location->name }}</option>
                         @endforeach
                     </select>
-                    <x-icon name="chevron-down" class="pointer-events-none absolute right-0 h-4 w-4"/>
+                    <x-icon name="chevron-down" class="pointer-events-none absolute right-0 h-3.5 w-3.5"/>
                 </label>
             </form>
 
             {{-- Di desktop, bantuan & notifikasi ada di navigasi atas --}}
-            <div class="flex gap-2 lg:hidden">
-                <x-help-button/>
-                <a href="{{ route('notifications') }}" class="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 transition hover:bg-white/30" aria-label="Notifikasi">
-                    <x-icon name="bell" class="h-5 w-5"/>
-                    @if ($hasUnreadNotifications)
-                        <span class="absolute right-2 top-2 h-2.5 w-2.5 rounded-full border-2 border-primary bg-red-500"></span>
-                    @endif
-                </a>
-            </div>
+            <a href="{{ route('notifications') }}" class="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary-50 text-primary transition hover:bg-primary-100 lg:hidden" aria-label="Notifikasi">
+                <x-icon name="bell-o" class="h-5 w-5"/>
+                @if ($hasUnreadNotifications)
+                    <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-primary-50"></span>
+                @endif
+            </a>
         </div>
 
-        <form id="car-filter" method="GET" action="{{ $action }}" class="mt-5 flex gap-3 lg:mt-0 lg:flex-1">
+        <form id="car-filter" method="GET" action="{{ $action }}" class="mt-4 lg:mt-0 lg:max-w-xl lg:flex-1">
             @foreach ($hidden as $name => $value)
                 <input type="hidden" name="{{ $name }}" value="{{ $value }}">
             @endforeach
 
-            <label class="flex flex-1 items-center gap-3 rounded-xl bg-white px-4 text-ink lg:bg-neutral">
-                <x-icon name="search" class="h-5 w-5 text-primary"/>
-                <input type="search" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="Search"
-                       class="w-full border-0 bg-transparent px-0 py-3 text-sm placeholder:text-grey focus:ring-0">
+            <label class="flex h-12 items-center gap-3 rounded-full bg-neutral pl-4 pr-1.5 text-ink">
+                <x-icon name="search" class="h-5 w-5 flex-none text-grey"/>
+                <input type="search" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="Cari mobil impianmu"
+                       class="w-full border-0 bg-transparent px-0 text-sm placeholder:text-grey focus:ring-0">
+                <button type="button" @click="filterOpen = true" class="relative flex h-9 w-9 flex-none items-center justify-center rounded-full bg-primary text-white transition hover:bg-primary-600" aria-label="Filter">
+                    <x-icon name="filter" class="h-4 w-4"/>
+                    @if ($activeFilters)
+                        <span class="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-ink text-[9px] text-white">{{ $activeFilters }}</span>
+                    @endif
+                </button>
             </label>
-
-            <button type="submit" class="hidden rounded-xl bg-ink px-6 text-sm font-medium text-white transition hover:bg-ink/90 lg:block">Cari</button>
-
-            <button type="button" @click="filterOpen = true" class="relative flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-white text-primary lg:w-auto lg:gap-2 lg:bg-primary-50 lg:px-4" aria-label="Filter">
-                <x-icon name="filter" class="h-6 w-6"/>
-                <span class="hidden text-sm font-medium lg:inline">Filter</span>
-                @if ($activeFilters)
-                    <span class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-ink text-[10px] text-white">{{ $activeFilters }}</span>
-                @endif
-            </button>
         </form>
     </div>
 

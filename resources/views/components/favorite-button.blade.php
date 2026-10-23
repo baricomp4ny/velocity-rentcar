@@ -10,7 +10,7 @@
                 .finally(() => busy = false)"
         :aria-pressed="saved"
         aria-label="Simpan mobil"
-        {{ $attributes->merge(['class' => "flex items-center justify-center bg-white shadow-card transition hover:scale-105 $class"]) }}>
-    <x-icon name="heart" class="h-5 w-5 text-ink" x-show="!saved"/>
-    <x-icon name="heart-solid" class="h-5 w-5 text-red-500" x-show="saved" x-cloak/>
+        {{ $attributes->merge(['class' => "flex items-center justify-center bg-white/95 shadow-sm backdrop-blur transition hover:scale-105 $class"]) }}>
+    <x-icon name="heart" class="h-[18px] w-[18px] text-ink" x-show="!saved"/>
+    <x-icon name="heart-solid" class="h-[18px] w-[18px] text-primary" x-show="saved" x-cloak/>
 </button>

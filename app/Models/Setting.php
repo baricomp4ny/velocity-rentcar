@@ -37,8 +37,8 @@ class Setting extends Model
             'register_subtitle' => ['Deskripsi halaman Buat Akun', 'textarea', 'Buat akun baru untuk mulai menyewa mobil dengan mudah'],
             'login_image' => ['Foto atas halaman Sign in & Buat Akun', 'image', 'images/ui/login-hero.jpg'],
         ],
-        'Poster Home' => [
-            'featured_car_id' => ['Mobil unggulan (kosongkan = mobil populer dengan rating tertinggi)', 'car', null],
+        'Banner Home' => [
+            'featured_car_id' => ['Mobil di banner Home (kosongkan = mobil populer dengan rating tertinggi)', 'car', null],
         ],
     ];
 

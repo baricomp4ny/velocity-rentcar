@@ -15,6 +15,7 @@ class CarController extends Controller
             'car' => $car,
             'isFavorite' => $request->user()->favorites()->whereKey($car->id)->exists(),
             'reviews' => $car->bookings()->with('user')->whereNotNull('rating')->latest('updated_at')->take(5)->get(),
+            'pickupLocation' => $request->user()->location?->name,
         ]);
     }
 

@@ -25,8 +25,8 @@ class HomeController extends Controller
 
         return view('user.home', [
             'featured' => $featured,
-            // Mobil di poster tidak diulang di daftar Populer Cars.
-            'cars' => $featured ? $cars->reject(fn (Car $car) => $car->is($featured))->values() : $cars,
+            'cars' => $cars,
+            'brands' => Brand::orderBy('sort_order')->get(),
             'filters' => $filters,
             'searching' => $searching,
             'favoriteIds' => $request->user()->favorites()->pluck('cars.id')->all(),
@@ -46,7 +46,10 @@ class HomeController extends Controller
             ->orderBy('price_per_day')
             ->get();
 
-        return view('user.explore', compact('brands', 'brand', 'cars', 'filters'));
+        return view('user.explore', [
+            ...compact('brands', 'brand', 'cars', 'filters'),
+            'favoriteIds' => $request->user()->favorites()->pluck('cars.id')->all(),
+        ]);
     }
 
     public function updateLocation(Request $request)
@@ -59,7 +62,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Mobil untuk poster Home: pilihan admin, atau mobil teratas di daftar populer.
+     * Mobil untuk banner Home: pilihan admin, atau mobil teratas di daftar populer.
      */
     private function featuredCar($cars): ?Car
     {
