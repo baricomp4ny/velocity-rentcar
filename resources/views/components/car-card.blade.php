@@ -1,7 +1,7 @@
 @props(['car', 'saved' => false])
 
 {{-- Kartu "Populer Cars" di halaman Home --}}
-<a href="{{ route('cars.show', $car) }}" class="block rounded-2xl border border-gray-100 bg-white p-3 shadow-card transition hover:-translate-y-0.5">
+<a href="{{ route('cars.show', $car) }}" data-car="{{ json_encode($car->filterData()) }}" class="block rounded-2xl border border-gray-100 bg-white p-3 shadow-card transition hover:-translate-y-0.5">
     <div class="relative flex h-40 items-center justify-center overflow-hidden rounded-xl bg-neutral lg:h-48">
         <img src="{{ $car->imageUrl() }}" alt="{{ $car->name }}" class="h-full w-full object-cover" loading="lazy">
         <span class="absolute left-3 top-3 flex items-center gap-1 rounded-md bg-primary-50 px-2 py-0.5 text-xs font-medium text-ink">

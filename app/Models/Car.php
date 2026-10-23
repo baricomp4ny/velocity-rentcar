@@ -73,6 +73,20 @@ class Car extends Model
             ->when($filters['seats'] ?? null, fn ($q, $v) => $q->where('seats', '>=', (int) $v));
     }
 
+    /**
+     * Data ringkas untuk atribut data-car pada kartu (dipakai filter di demo statis).
+     */
+    public function filterData(): array
+    {
+        return [
+            'text' => strtolower("{$this->name} {$this->brand->name} {$this->category->name}"),
+            'category' => $this->category_id,
+            'transmission' => $this->transmission,
+            'fuel' => $this->fuel,
+            'seats' => $this->seats,
+        ];
+    }
+
     public function fuelLabel(): string
     {
         return $this->fuel_grade ? "{$this->fuel} ({$this->fuel_grade})" : $this->fuel;

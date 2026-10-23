@@ -1,7 +1,7 @@
 @props(['car'])
 
 {{-- Kartu daftar mobil di halaman Explore / merek --}}
-<div class="flex gap-3 rounded-2xl border border-primary-100 bg-neutral p-3 lg:gap-5 lg:border-gray-100 lg:bg-white lg:p-4 lg:shadow-card">
+<div data-car="{{ json_encode($car->filterData()) }}" class="flex gap-3 rounded-2xl border border-primary-100 bg-neutral p-3 lg:gap-5 lg:border-gray-100 lg:bg-white lg:p-4 lg:shadow-card">
     <a href="{{ route('cars.show', $car) }}" class="h-[92px] w-[106px] flex-none overflow-hidden rounded-xl bg-white">
         <img src="{{ $car->imageUrl() }}" alt="{{ $car->name }}" class="h-full w-full object-cover" loading="lazy">
     </a>

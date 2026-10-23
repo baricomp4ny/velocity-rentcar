@@ -8,7 +8,7 @@
 
     @if ($featured)
         {{-- Poster menyambung di bawah lengkung header biru (ponsel) --}}
-        <div class="container-page -mt-6 lg:mt-8">
+        <div data-poster class="container-page -mt-6 lg:mt-8">
             <div class="pt-6 lg:pt-0">
                 <x-featured-car :car="$featured"/>
             </div>
