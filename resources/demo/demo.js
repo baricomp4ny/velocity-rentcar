@@ -9,14 +9,7 @@ const demo = window.VELOCITY_DEMO;
 const STORAGE_FAVORITES = 'velocity-demo-favorites';
 const STORAGE_BOOKING = 'velocity-demo-booking';
 
-/* ---------- UI kecil: pita info & toast ---------- */
-
-function ribbon() {
-    const bar = document.createElement('div');
-    bar.style.cssText = 'position:relative;z-index:70;background:#121212;color:#fff;font:500 12px Poppins,sans-serif;text-align:center;padding:7px 12px';
-    bar.innerHTML = `Demo statis &middot; data tidak disimpan &middot; <a href="${demo.repo}" target="_blank" rel="noopener" style="color:#B9DCFF;text-decoration:underline">Lihat kode lengkap (Laravel) di GitHub</a>`;
-    document.body.prepend(bar);
-}
+/* ---------- UI kecil: toast ---------- */
 
 let toastTimer;
 function toast(message) {
@@ -262,7 +255,6 @@ function fillReceipt() {
 
 /* ---------- Mulai ---------- */
 
-ribbon();
 installAxiosMock();
 fillReceipt();
 document.addEventListener('submit', handleSubmit, true);
