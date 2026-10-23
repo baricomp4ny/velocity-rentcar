@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-sans text-ink antialiased;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@layer components {
+    /* Pembungkus konten: penuh di ponsel, terpusat & lebar di desktop */
+    .container-page {
+        @apply w-full lg:mx-auto lg:max-w-6xl lg:px-8;
+    }
+
+    /* Primary button: "Book Now", "Let's Get Started", "Sign in" */
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 font-medium text-white transition hover:bg-primary-600 active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    /* "Or sign in with Google" */
+    .btn-dark {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-[#2F2F2F] px-5 py-3 text-sm font-medium text-white transition hover:bg-ink;
+    }
+
+    /* "Lihat Detail" outline button */
+    .btn-outline {
+        @apply inline-flex items-center justify-center rounded-lg border border-primary bg-white px-3 py-1.5 text-xs font-medium text-primary transition hover:bg-primary-50;
+    }
+
+    /* Secondary chips: Hatchback, MPV, SUV, Sedan, Crossover */
+    .chip {
+        @apply inline-flex items-center rounded-md bg-primary-50 px-2 py-0.5 text-[11px] font-medium text-primary;
+    }
+
+    .chip-outline {
+        @apply inline-flex cursor-pointer items-center rounded-md border border-primary-100 bg-white px-3 py-1.5 text-xs font-medium text-primary transition peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white;
+    }
+
+    /* Text fields */
+    .input {
+        @apply w-full rounded-lg border-0 bg-neutral px-4 py-3 text-sm text-ink placeholder:text-grey focus:ring-2 focus:ring-primary;
+    }
+
+    .label {
+        @apply mb-2 block text-sm font-medium text-ink;
+    }
+
+    .error {
+        @apply mt-1 text-xs text-red-500;
+    }
+
+    .card {
+        @apply rounded-2xl bg-white shadow-card;
+    }
+
+    /* Round icon buttons: back, share, favorite */
+    .icon-btn {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white text-ink shadow-card transition hover:bg-neutral;
+    }
+
+    /* Admin */
+    .admin-input {
+        @apply w-full rounded-lg border-gray-200 text-sm focus:border-primary focus:ring-primary;
+    }
+
+    .admin-th {
+        @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-grey;
+    }
+
+    .admin-td {
+        @apply px-4 py-3 text-sm;
+    }
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240">
+  <rect width="400" height="240" fill="#F6F6F6"/>
+  <g fill="none" stroke="#B5B5B5" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M70 160h-12a10 10 0 0 1-10-10v-22a14 14 0 0 1 10-13l36-10 34-30a28 28 0 0 1 18-7h92a28 28 0 0 1 20 8l34 33 34 8a14 14 0 0 1 11 14v19a10 10 0 0 1-10 10h-14"/>
+    <path d="M130 160h140"/>
+    <circle cx="100" cy="162" r="26"/>
+    <circle cx="300" cy="162" r="26"/>
+    <path d="M128 104l24-22h52v22zM222 104V82h40l22 22z"/>
+  </g>
+  <text x="200" y="222" text-anchor="middle" font-family="Poppins, sans-serif" font-size="16" fill="#888689">Foto belum tersedia</text>
+</svg>
